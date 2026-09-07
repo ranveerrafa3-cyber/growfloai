@@ -36,6 +36,65 @@
   --ease-io: cubic-bezier(.65,.05,.36,1);
 }
 
+/* ---------- INTRO LOADER ---------- */
+.intro{
+  position:fixed; inset:0; z-index:9999;
+  background:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none;
+}
+.intro-vid{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+}
+.intro-logo{
+  display:flex; flex-direction:column; align-items:center; gap:20px;
+  will-change:transform, opacity;
+  opacity:0;
+  position:relative; z-index:1;
+}
+.intro-logo svg{
+  width:116px; height:auto; color:var(--bone);
+}
+.intro-logo .intro-txt{
+  font-family:var(--display); font-weight:600; text-transform:uppercase;
+  font-size:34px; letter-spacing:.05em; line-height:1;
+  color:var(--bone);
+}
+.intro-logo .intro-txt em{
+  font-family:inherit; font-style:normal; color:var(--gold);
+}
+
+.intro.show-logo .intro-logo{
+  opacity:1;
+}
+.intro.show-logo .intro-vid{
+  opacity:0;
+}
+
+.intro.settle .intro-logo{
+  animation:intro-settle 1s var(--ease-io) forwards;
+}
+.intro.settle{
+  animation:intro-bg-out .6s var(--ease) .7s forwards;
+}
+
+@keyframes intro-settle{
+  0%{   transform:translate(0,0) scale(1); }
+  100%{ transform:translate(calc(-50vw + 60px), calc(-50vh + 49px)) scale(.33); opacity:1; }
+}
+@keyframes intro-bg-out{
+  to{ opacity:0; visibility:hidden; }
+}
+
+@media(max-width:900px){
+  .intro-logo svg{ width:56px; }
+  .intro-logo .intro-txt{ font-size:18px; }
+  @keyframes intro-settle{
+    0%{   transform:translate(0,0) scale(1); }
+    100%{ transform:translate(calc(-50vw + 44px), calc(-50vh + 40px)) scale(.33); opacity:1; }
+  }
+}
+
 /* ---------- RESET ---------- */
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
 html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
@@ -484,6 +543,7 @@ p{ color:var(--bone-dim); max-width:66ch; }
   font-family:var(--display); text-transform:uppercase; font-size:clamp(16px,1.7vw,22px);
   letter-spacing:.05em; color:var(--muted-2); display:flex; align-items:center; gap:56px; white-space:nowrap;
 }
+.marq-track span:nth-child(even){ color:var(--bone); text-shadow:0 0 12px rgba(244,244,242,.45); }
 .marq-track span::after{ content:''; width:5px; height:5px; background:var(--gold); border-radius:50%; }
 @keyframes marq{ to{ transform:translateX(-50%); } }
 
