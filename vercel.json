@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "_comment": "Security headers per report section A3. connect-src is set to Google Apps Script, matching the ENDPOINT in assets/js/form.js — both script.google.com and script.googleusercontent.com are required because /exec redirects. GoHighLevel is intentionally absent from connect-src: the CRM push happens server-side in leads-sheet/apps-script.gs, so the token never reaches the browser. api.leadconnectorhq.com stays in frame-src for the booking calendar only. Test on a preview deployment before promoting to production.",
   "headers": [
     {
       "source": "/(.*)",
