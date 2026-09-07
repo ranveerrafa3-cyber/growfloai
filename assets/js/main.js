@@ -16,12 +16,11 @@
      --------------------------------------------------------- */
   var wipe = $('.wipe');
   var intro = $('#intro');
-  var introVid = $('#introVid');
   window.addEventListener('load', function () {
     document.body.classList.add('loaded');
     if (wipe) { wipe.classList.add('out'); }
 
-    if (intro && introVid) {
+    if (intro) {
       document.body.classList.add('is-locked');
 
       if (REDUCED) {
@@ -30,28 +29,13 @@
         return;
       }
 
-      function finishIntro() {
-        if (intro.dataset.done) return;
-        intro.dataset.done = '1';
-        intro.classList.add('show-logo');
-        setTimeout(function () {
-          intro.classList.add('settle');
-        }, 100);
-        setTimeout(function () {
-          document.body.classList.remove('is-locked');
-          intro.remove();
-        }, 1400);
-      }
-
-      introVid.addEventListener('ended', finishIntro);
-
-      introVid.play().catch(function () {
-        finishIntro();
-      });
-
       setTimeout(function () {
-        if (!intro.dataset.done) finishIntro();
-      }, 10000);
+        intro.classList.add('settle');
+      }, 2200);
+      setTimeout(function () {
+        document.body.classList.remove('is-locked');
+        intro.remove();
+      }, 3600);
     }
   });
 

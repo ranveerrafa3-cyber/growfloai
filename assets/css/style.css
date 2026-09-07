@@ -43,32 +43,31 @@
   display:flex; align-items:center; justify-content:center;
   pointer-events:none;
 }
-.intro-vid{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-}
 .intro-logo{
   display:flex; flex-direction:column; align-items:center; gap:20px;
   will-change:transform, opacity;
-  opacity:0;
-  position:relative; z-index:1;
 }
 .intro-logo svg{
   width:116px; height:auto; color:var(--bone);
+  opacity:0; transform:scale(.5);
+  animation:intro-icon .9s var(--ease) .2s forwards;
 }
 .intro-logo .intro-txt{
   font-family:var(--display); font-weight:600; text-transform:uppercase;
   font-size:34px; letter-spacing:.05em; line-height:1;
   color:var(--bone);
+  opacity:0; transform:translateY(14px);
+  animation:intro-fade-up .7s var(--ease) .7s forwards;
 }
 .intro-logo .intro-txt em{
   font-family:inherit; font-style:normal; color:var(--gold);
 }
 
-.intro.show-logo .intro-logo{
-  opacity:1;
+@keyframes intro-icon{
+  to{ opacity:1; transform:scale(1); }
 }
-.intro.show-logo .intro-vid{
-  opacity:0;
+@keyframes intro-fade-up{
+  to{ opacity:1; transform:translateY(0); }
 }
 
 .intro.settle .intro-logo{
