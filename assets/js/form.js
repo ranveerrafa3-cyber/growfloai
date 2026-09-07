@@ -206,6 +206,11 @@
     if (!valid()) return;
     if (val('website')) return;               // honeypot tripped — silently stop
 
+    try {
+      var lastSub = parseInt(localStorage.getItem('gf_last_sub') || '0', 10);
+      if (Date.now() - lastSub < 30000) return fail('You just submitted — please wait a moment.');
+    } catch (e) {}
+
     err.classList.remove('on');               // clear any leftover validation message
     var payload = collect();
     nextTxt.textContent = 'Sending…';
@@ -225,6 +230,7 @@
       body: JSON.stringify(payload)
     }).then(function (r) {
       if (!r.ok) throw new Error('bad response');
+      try { localStorage.setItem('gf_last_sub', String(Date.now())); } catch (e) {}
       finish(payload);
     }).catch(function () {
       next.style.pointerEvents = '';

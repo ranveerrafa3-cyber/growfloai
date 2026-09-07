@@ -82,6 +82,11 @@ function doPost(e) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return reply(422, 'email');
     if (phone.length < 7) return reply(422, 'phone');
 
+    var cache = CacheService.getScriptCache();
+    var cacheKey = 'rl_' + email.toLowerCase().replace(/[^a-z0-9@.]/g, '');
+    if (cache.get(cacheKey)) return reply(429, 'duplicate — try again in a few minutes');
+    cache.put(cacheKey, '1', 300);
+
     /* The sheet is the source of truth and gets written FIRST. If GHL is
        down, rate-limiting us, or the token has been rotated, the lead is
        still captured — we only lose the CRM copy, and the GHL column says
