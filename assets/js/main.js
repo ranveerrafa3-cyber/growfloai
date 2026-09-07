@@ -31,11 +31,11 @@
 
       setTimeout(function () {
         intro.classList.add('settle');
-      }, 2200);
+      }, 1400);
       setTimeout(function () {
         document.body.classList.remove('is-locked');
         intro.remove();
-      }, 3600);
+      }, 2800);
     }
   });
 
@@ -76,6 +76,20 @@
       radius: null,
       fallbackBlur: 16
     });
+
+    var mobRes = $('.mob-results');
+    if (mobRes) {
+      window.liquidGlass(mobRes, {
+        scale: -112,
+        chroma: 6,
+        border: 0.07,
+        mapBlur: 12,
+        blur: 3,
+        saturate: 1.5,
+        radius: null,
+        fallbackBlur: 16
+      });
+    }
   })();
 
   /* ---------------------------------------------------------
