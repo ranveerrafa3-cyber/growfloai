@@ -1,0 +1,7 @@
+# Claude Code session transcript — contains the full conversation.
+# Never deploy or commit this.
+.claude-session/
+.claude/
+
+# local scratch
+_bundle-test.html

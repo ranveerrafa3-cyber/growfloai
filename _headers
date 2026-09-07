@@ -1,0 +1,25 @@
+## Security headers — Netlify and Cloudflare Pages read this file as-is.
+## Report ref: A3. Test on a staging URL before going live: a too-tight CSP
+## silently breaks the fonts, the form POST, or the booking calendar.
+##
+## Webhook host is set to Google Apps Script, matching the ENDPOINT in
+## assets/js/form.js. BOTH hosts are required: /exec is served from
+## script.google.com and then redirects to script.googleusercontent.com —
+## list only the first and the POST dies on the redirect.
+##
+## GoHighLevel is deliberately NOT in connect-src. The CRM push happens
+## server-side inside leads-sheet/apps-script.gs, so the browser never talks
+## to GHL and the API token never leaves Google. api.leadconnectorhq.com stays
+## in frame-src below purely for the booking calendar iframe.
+##
+## If you ever move the form off Apps Script, update connect-src AND
+## form-action to the new host or the browser will block the POST.
+
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://link.msgsndr.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://api.leadconnectorhq.com https://link.msgsndr.com; base-uri 'self'; form-action 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; frame-ancestors 'none'

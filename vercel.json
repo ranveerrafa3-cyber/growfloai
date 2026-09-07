@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "_comment": "Security headers per report section A3. connect-src is set to Google Apps Script, matching the ENDPOINT in assets/js/form.js — both script.google.com and script.googleusercontent.com are required because /exec redirects. GoHighLevel is intentionally absent from connect-src: the CRM push happens server-side in leads-sheet/apps-script.gs, so the token never reaches the browser. api.leadconnectorhq.com stays in frame-src for the booking calendar only. Test on a preview deployment before promoting to production.",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), payment=(), usb=()" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://link.msgsndr.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://api.leadconnectorhq.com https://link.msgsndr.com; base-uri 'self'; form-action 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; frame-ancestors 'none'"
+        }
+      ]
+    }
+  ]
+}
