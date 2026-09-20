@@ -11,7 +11,7 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzvWQQOjhuS3EXPgFW3njum8ZAgRdgBXDenWEHoTOZd2-AP_rO2YVtRgLv2HQ4MnseYKA/exec';
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxk-JUThEfQir-aZdt7t9Pnl-OM-JnZjtusGAmTxoiAAR4Cv7RF8QK5EK8GyZ3-cBgY/exec';
   var REDIRECT_AFTER = '';     // optional: '/thank-you.html' instead of the booking step
 
   /* Body is always JSON. The header decides whether the browser sends a CORS

@@ -127,9 +127,16 @@ header *names*, and is safe to run twice.
 
 ## Open items (need the user, not code)
 
-- ~~`ENDPOINT` in `assets/js/form.js` is empty~~ — ✅ **set 2026-09-06.**
-  Deployed `/exec` URL confirmed live end-to-end with a manual POST that
-  returned `{"ok":true,"status":200,"message":"ok"}`. If you ever need to
+- ~~`ENDPOINT` in `assets/js/form.js` is empty~~ — ✅ **set 2026-09-06,
+  re-pointed 2026-09-20.** The original sheet and its Apps Script deployment
+  lived in a *third party's* Google account, which the user no longer has a
+  relationship with. Leads and the `GHL_TOKEN` were sitting in someone else's
+  Drive. Replaced on 2026-09-20 with a sheet called **"leads tracker -
+  website"** in the user's own account (`ron@growfloai.com`), a fresh
+  deployment, and a **rotated** GHL Private Integration token — the old
+  integration was deleted. The old `/exec` URL (`AKfycbzv…`) is defunct; never
+  restore it. The leads captured before that date remain in the third party's
+  spreadsheet and are unrecoverable without their cooperation. If you ever need to
   re-verify: a POST to `/exec` 302-redirects to a `script.googleusercontent.com`
   echo URL, and the real JSON reply is on THAT url, not on `/exec` itself.
   `curl -L` mangles this — it can 405 on a perfectly working deployment. Curl
