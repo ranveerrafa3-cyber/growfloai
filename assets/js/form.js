@@ -41,6 +41,46 @@
   var total = steps.length;
   var i = 0;
 
+  /* ----------------------------------------------------------
+     PROGRESS TRACKING
+     Every time the visitor lands on a new question we tell the
+     endpoint how far they got, so a form that is never finished
+     still shows up in the sheet as an abandoned row. The final
+     submit carries the same session id, which upgrades that one
+     row rather than adding a second.
+     ---------------------------------------------------------- */
+
+  /* Per-visit id, regenerated on every page load. This is a form-session
+     key, not a tracking cookie: nothing is stored and nothing is read back,
+     so it cannot follow anyone between visits. */
+  var SESSION = (function () {
+    try {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      if (window.crypto && crypto.getRandomValues) {
+        var a = new Uint8Array(16);
+        crypto.getRandomValues(a);
+        return Array.prototype.map.call(a, function (b) {
+          return ('0' + b.toString(16)).slice(-2);
+        }).join('');
+      }
+    } catch (e) {}
+    return 'gf-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+  })();
+
+  /* Readable names for the sheet's "Reached step" column, keyed by the
+     step's data-req. Must stay in step with STEPS in apps-script.gs. */
+  var STEP_LABELS = {
+    trade: 'Trade',
+    city: 'Service area',
+    spend: 'Ad spend',
+    capacity: 'Capacity',
+    pain: 'What is breaking',
+    contact: 'Contact details'
+  };
+
+  var sentComplete = false;    // once true, stop reporting progress
+  var lastPinged = -1;         // furthest step already reported
+
   /* NB: use form.elements — form.name would return the <form> name attribute,
      not the input called "name". */
   function el(n) { return form.elements[n]; }
@@ -115,6 +155,7 @@
     if (dir > 0 && isBook(target)) { submit(); return; }
     i = target;
     paint();
+    if (dir > 0) ping(false);
   }
 
   next.addEventListener('click', function () { go(1); });
@@ -124,6 +165,14 @@
   form.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); go(1); }
   });
+
+  /* Closing the tab or switching away is the commonest way a form dies.
+     sendBeacon survives the page going away; fetch does not. */
+  function leaving() {
+    if (document.visibilityState === 'hidden') ping(true);
+  }
+  document.addEventListener('visibilitychange', leaving);
+  window.addEventListener('pagehide', function () { ping(true); });
 
   function collect() {
     return {
@@ -141,6 +190,45 @@
       source: 'growfloai.com/start',
       submittedAt: new Date().toISOString()
     };
+  }
+
+  /**
+   * Reports how far the visitor has got. Fire-and-forget by design: a failed
+   * ping is analytics we can live without and must never interrupt someone
+   * filling in the form, so every error path is swallowed.
+   *
+   * beacon=true for the page going away — fetch is cancelled on unload,
+   * sendBeacon is not.
+   */
+  function ping(beacon) {
+    if (!ENDPOINT || sentComplete) return;
+    if (i <= 0 || isBook(i)) return;          // step 1 unanswered — no intent yet
+    if (beacon && i <= lastPinged) return;    // nothing new since the last one
+    lastPinged = i;
+
+    var payload = collect();
+    payload.kind = 'partial';
+    payload.session = SESSION;
+    payload.step = i + 1;
+    payload.stepName = STEP_LABELS[steps[i].getAttribute('data-req')] || '';
+
+    var body = JSON.stringify(payload);
+
+    try {
+      if (beacon && navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: CONTENT_TYPE }));
+        return;
+      }
+    } catch (e) {}
+
+    try {
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': CONTENT_TYPE },
+        body: body,
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
   }
 
   /* Builds the booking iframe with the visitor's details prefilled, so they
@@ -213,6 +301,8 @@
 
     err.classList.remove('on');               // clear any leftover validation message
     var payload = collect();
+    payload.kind = 'complete';
+    payload.session = SESSION;                // upgrades this visitor's partial row
     nextTxt.textContent = 'Sending…';
     next.style.pointerEvents = 'none';
 
@@ -230,6 +320,7 @@
       body: JSON.stringify(payload)
     }).then(function (r) {
       if (!r.ok) throw new Error('bad response');
+      sentComplete = true;                    // stop the progress pings
       try { localStorage.setItem('gf_last_sub', String(Date.now())); } catch (e) {}
       finish(payload);
     }).catch(function () {

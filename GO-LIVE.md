@@ -37,13 +37,45 @@ never go in any file in this folder.
 > pencil icon → Version: **New version** → Deploy. Editing the code alone does
 > not update the live URL.
 
-**Columns you get:** Received · Name · Business · Email · Phone · Trade · City ·
-Travel radius · Ad spend · Capacity · What is breaking · Notes · Booked call ·
-Status · Source · Submitted (browser)
+**Columns you get:** Received · Stage · Reached step · Name · Business · Email ·
+Phone · Trade · City · Travel radius · Ad spend · Capacity · What is breaking ·
+Notes · Booked call · Status · Source · Submitted (browser) · Last update ·
+Session · GHL
 
 `Booked call` and `Status` are yours to fill in — the script leaves `Status`
-as `New`. [`leads-sheet/growflo-leads-template.csv`](leads-sheet/growflo-leads-template.csv)
-shows the exact layout with two example rows if you'd rather start from an import.
+as `New` on a finished form and `Abandoned` on one that was never completed.
+[`leads-sheet/growflo-leads-template.csv`](leads-sheet/growflo-leads-template.csv)
+shows the exact layout with example rows if you'd rather start from an import.
+
+### Who finished and who didn't
+
+`setup()` also builds a **Funnel** tab: how many started, how many finished, the
+completion rate, and a count of how many are still sitting on each question.
+Every cell is a formula over the `Leads` tab, so it updates itself — there is
+nothing to re-run.
+
+On the `Leads` tab itself, **Stage** is the column that matters:
+
+| Stage | Means | Status starts as |
+|---|---|---|
+| `Partial` | Started the form, never finished it. Amber row. | `Abandoned` |
+| `Completed` | Answered all six questions. Green row. | `New` |
+
+**Reached step** tells you exactly where a partial one stopped, e.g.
+`3 of 6 — Ad spend`. Sort or filter on **Stage** to split the two groups.
+
+**What a partial row can't tell you:** contact details are question 6, the last
+one. Anyone who quits before that has no name, email or phone to record, so
+most partial rows are anonymous. They show you *which question loses people*,
+not who to chase. Partial rows are never pushed to GoHighLevel.
+
+> **Upgrading a sheet you already have:** the `Stage`, `Reached step`,
+> `Last update` and `Session` columns are new. Paste the current script, then
+> select **`migrate`** in the editor and press Run — once. It rewrites the
+> header and moves every existing row's values to their new positions by
+> matching on column *name*, marks your existing leads `Completed`, and builds
+> the Funnel tab. Running it twice is harmless; it reports
+> `already up to date` and changes nothing.
 
 **Don't change `CONTENT_TYPE` in form.js** unless you switch endpoints. It's set
 to `text/plain;charset=utf-8` so the browser skips the CORS preflight that Apps
@@ -141,6 +173,11 @@ Step 7 of the form is the GoHighLevel calendar
 step 6 — *before* the calendar appears. So someone who fills in the form and
 then abandons the booking still reaches you. The booking step only opens once
 that submission succeeds.
+
+As they move through questions 2-6 the form also sends a lightweight progress
+ping, so a form that is *never* finished still lands in the sheet as a
+`Partial` row. Those pings are fire-and-forget: if one fails it is silently
+dropped rather than interrupting someone mid-form.
 
 The iframe is built with the visitor's name, email and phone prefilled from
 what they just typed, so they don't enter it twice.

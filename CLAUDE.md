@@ -75,6 +75,12 @@ Design tokens: `--ink #000` `--bone #F4F4F2` `--bone-dim #C9C9C2`
   small screenshots + 4 numbers + one quote, all linking out to `results.html`.
 - **Form sends the lead when leaving step 6, before the calendar appears**, so
   an abandoned booking is still captured.
+- **The form also pings progress on every question from 2 onwards**
+  (`kind:'partial'` + a per-visit `session` id), so a form that is never
+  finished still lands in the sheet as a `Partial` row and you can see which
+  question loses people. The pings are fire-and-forget — a failed one must
+  never interrupt someone filling the form. Partial rows are **never** pushed
+  to GHL: there is no email to push before question 6.
 - **The artifact bundle** (`claude.ai/code/artifact/786e6b81-f195-4db4-ab44-a745040bb98e`)
   is a single-file build of all 4 pages with a hash router, rebuilt by
   `bundle.js` in the scratchpad. The calendar iframe cannot work there —
@@ -111,6 +117,13 @@ The GHL Private Integration token lives in **Apps Script Script Properties**
 
 The sheet row is written **before** the GHL call, and the GHL result is
 recorded in the sheet's `GHL` column. A CRM outage must never lose a lead.
+
+One visitor is **one row**, keyed by `session`: the partial pings create it and
+fill it in, the final submit upgrades the same row to `Completed`. A late
+partial ping can never drag a completed row back — that guard is tested. The
+`Funnel` tab is pure formulas over `Leads`, so it never needs re-running.
+`migrate()` moves an older 17-column sheet onto the current columns by matching
+header *names*, and is safe to run twice.
 
 ## Open items (need the user, not code)
 
