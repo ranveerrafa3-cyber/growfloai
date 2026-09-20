@@ -135,7 +135,7 @@ invalidates the old one.
 ## 4. The booking step
 
 Step 7 of the form is the GoHighLevel calendar
-(`bsc6yBx9MfXKer7SJRe4`), configured in `CAL_URL` at the top of `form.js`.
+(`sZ7Ccm8VUwYUJhvCtGPv`), configured in `CAL_URL` at the top of `form.js`.
 
 **How the flow works:** the lead is POSTed to your spreadsheet when they leave
 step 6 — *before* the calendar appears. So someone who fills in the form and

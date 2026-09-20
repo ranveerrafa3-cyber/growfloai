@@ -24,7 +24,7 @@
 
   /* GoHighLevel booking widget shown on the final step. This is a public
      embed URL, not a credential — safe to ship in a public file. */
-  var CAL_URL = 'https://api.leadconnectorhq.com/widget/booking/bsc6yBx9MfXKer7SJRe4';
+  var CAL_URL = 'https://api.leadconnectorhq.com/widget/booking/sZ7Ccm8VUwYUJhvCtGPv';
 
   var form = document.getElementById('gfForm');
   if (!form) return;
