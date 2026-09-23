@@ -179,6 +179,31 @@ ping, so a form that is *never* finished still lands in the sheet as a
 `Partial` row. Those pings are fire-and-forget: if one fails it is silently
 dropped rather than interrupting someone mid-form.
 
+### Knowing who actually booked
+
+The calendar on step 7 is a GoHighLevel iframe — the site has no visibility
+into whether someone inside it actually finished picking a time. To close
+that gap, a GHL **Workflow** (built inside GHL itself, not by this script —
+the public API can't create workflows) watches the "Qualified Estimates
+Strategy Call" calendar for a completed booking and POSTs to the same
+`/exec` URL with `?source=ghl_booking&key=<BOOKING_WEBHOOK_KEY>` on it.
+
+That query string is what routes the request — `apps-script.gs` never has to
+recognise GHL's payload shape to know this isn't a form submission. The
+`key` stops a stranger who finds the public `/exec` URL from POSTing a fake
+booking and flipping someone's row to "Booked call: Yes".
+
+**One-time setup:**
+
+1. In Apps Script → Script Properties, add `BOOKING_WEBHOOK_KEY` set to any
+   string you choose.
+2. In the GHL workflow's webhook action, set the URL to your `/exec` URL
+   with `?source=ghl_booking&key=<the same string>` appended.
+3. Publish the workflow.
+
+Until both sides agree on that key, the webhook is rejected with a clear
+`bad key` or `not configured` response rather than silently doing nothing.
+
 The iframe is built with the visitor's name, email and phone prefilled from
 what they just typed, so they don't enter it twice.
 

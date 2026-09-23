@@ -125,6 +125,22 @@ partial ping can never drag a completed row back — that guard is tested. The
 `migrate()` moves an older 17-column sheet onto the current columns by matching
 header *names*, and is safe to run twice.
 
+**"Booked call" is filled by a second, separate webhook**, not by anything
+form.js sends. A GHL Workflow (built by hand in the GHL UI, on the
+"Qualified Estimates Strategy Call" calendar, trigger "Customer Booked
+Appointment") POSTs to the same `/exec` URL with `?source=ghl_booking&key=…`
+on it. `doPost()` routes on that query string — added 2026-09-24 — never on
+the JSON body, because a GHL workflow's payload shape isn't documented
+anywhere reliable and isn't ours to control. The `key` is checked against
+Script Property `BOOKING_WEBHOOK_KEY` so a stranger who finds the public
+`/exec` URL can't fake a booking. The handler matches by **email** (GHL
+doesn't know our `session` id) against the most recent row for that email,
+and never creates a new row — an unmatched email is logged and dropped.
+`bookingEmail()`/`bookingTime()` guess at several plausible GHL payload
+shapes; if the real payload doesn't match any of them, `Logger.log` records
+the raw body so the guess can be corrected from a real example rather than
+from GHL's documentation.
+
 ## Open items (need the user, not code)
 
 - ~~`ENDPOINT` in `assets/js/form.js` is empty~~ — ✅ **set 2026-09-06,

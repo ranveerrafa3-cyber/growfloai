@@ -128,9 +128,26 @@ function rowFrom(values) {
 
 function doPost(e) {
   try {
-    if (!e || !e.postData || !e.postData.contents) return reply(400, 'no body');
+    if (!e) return reply(400, 'no request');
 
-    var d = JSON.parse(e.postData.contents);
+    /* Routed on the URL's query string, not the body — a GHL Workflow
+       webhook's payload shape isn't ours to control, so this decision
+       never depends on being able to parse or recognise it. */
+    var isBooking = e.parameter && e.parameter.source === 'ghl_booking';
+
+    var d = {};
+    if (e.postData && e.postData.contents) {
+      try {
+        d = JSON.parse(e.postData.contents);
+      } catch (parseErr) {
+        if (!isBooking) return reply(400, 'bad json');
+        d = {};   // booking webhook may not send JSON — fall through
+      }
+    } else if (!isBooking) {
+      return reply(400, 'no body');
+    }
+
+    if (isBooking) return handleBookingWebhook(d, e);
 
     // Honeypot: a real person never fills this. Accept and discard.
     if (d.website) return reply(200, 'ok');
@@ -271,6 +288,97 @@ function handleComplete(d) {
   sheet.getRange(row, col('GHL')).setValue(text(status));
 
   return reply(200, 'ok');
+}
+
+/* ============================================================
+   GHL BOOKING WEBHOOK — someone actually booked the calendar slot
+   ------------------------------------------------------------
+   The calendar iframe (start.html step 7) is GHL's own widget — this
+   script has zero visibility into what happens inside it. To find out,
+   a GHL Workflow on the "Qualified Estimates Strategy Call" calendar
+   (trigger: Customer Booked Appointment) POSTs here with
+   ?source=ghl_booking&key=<BOOKING_WEBHOOK_KEY> on the URL.
+
+   The query string routes the request, not the JSON body — GHL's
+   payload shape for this trigger isn't documented anywhere reliable,
+   so doPost() never depends on being able to parse or recognise it.
+
+   `key` is checked against a Script Property of the same name so a
+   stranger who finds the public /exec URL can't POST a fake booking
+   and flip a stranger's row to "Booked call: Yes". Set
+   BOOKING_WEBHOOK_KEY here to any string, then put that exact string
+   in the webhook URL's `key` parameter in the GHL workflow.
+   ============================================================ */
+
+function handleBookingWebhook(d, e) {
+  var key = PropertiesService.getScriptProperties().getProperty('BOOKING_WEBHOOK_KEY');
+  var given = (e.parameter && e.parameter.key) || '';
+  if (!key) return reply(500, 'BOOKING_WEBHOOK_KEY not configured');
+  if (given !== key) return reply(403, 'bad key');
+
+  var email = bookingEmail(d, e);
+  if (!email) {
+    // Never seen GHL's real payload for this trigger yet — log it instead
+    // of guessing wrong silently, so the shape can be fixed once and for
+    // all from an actual example rather than from documentation.
+    Logger.log('booking webhook: no email found — ' + JSON.stringify(d).slice(0, 1000));
+    return reply(200, 'ok (no email in payload)');
+  }
+
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(20000);
+  } catch (err) {
+    return reply(503, 'busy');
+  }
+
+  try {
+    var sheet = getSheet();
+    var row = findLatestRowByEmail(sheet, email);
+    if (!row) {
+      Logger.log('booking webhook: no matching lead for ' + email);
+      return reply(200, 'ok (no matching lead)');
+    }
+
+    var when = bookingTime(d);
+    sheet.getRange(row, col('Booked call')).setValue(text(when ? 'Yes (' + when + ')' : 'Yes'));
+    return reply(200, 'ok');
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * Tries every shape GHL's webhook body plausibly uses, plus a query-string
+ * fallback in case the body isn't JSON at all. Never guaranteed correct
+ * until checked against a real payload — see the Logger.log above.
+ */
+function bookingEmail(d, e) {
+  var v = d.email || (d.contact && d.contact.email) || d['contact.email'] ||
+    (e.parameter && e.parameter.email) || '';
+  return String(v).trim().toLowerCase();
+}
+
+/** The appointment's start time, if GHL included one — best-effort. */
+function bookingTime(d) {
+  var v = (d.calendar && (d.calendar.startTime || d.calendar.start_time)) ||
+    d.startTime || d.start_time || '';
+  return String(v || '').trim();
+}
+
+/**
+ * The most recent lead for this email — someone can fill the form more
+ * than once, and the booking belongs to whichever visit they just made.
+ * Scans bottom-up so the newest match wins without needing every row.
+ */
+function findLatestRowByEmail(sheet, email) {
+  var last = sheet.getLastRow();
+  if (last < 2) return 0;
+  var values = sheet.getRange(2, col('Email'), last - 1, 1).getValues();
+  for (var k = values.length - 1; k >= 0; k--) {
+    if (String(values[k][0]).trim().toLowerCase() === email) return k + 2;
+  }
+  return 0;
 }
 
 /* ============================================================
