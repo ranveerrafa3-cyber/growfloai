@@ -3,7 +3,7 @@
    ------------------------------------------------------------
    Vanilla WebGL2 port of the animated cloud/nebula shader
    (original GLSL by Matthias Hurrle, @atzedent), recoloured
-   from its rainbow default to the site's gold-on-black palette.
+   from its rainbow default to the site's champagne-on-black palette.
 
    Degrades silently: if WebGL2 is unavailable, or the visitor
    prefers reduced motion, the canvas stays hidden and the CSS
@@ -84,7 +84,7 @@
     '    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);',
     '    float b=noise(i+p+bg*1.731);',
     '    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));',
-    '    col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);',
+    '    col=mix(col,vec3(bg*.17,bg*.135,bg*.085),d);',
     '  }',
     '  O=vec4(col,1);',
     '}'

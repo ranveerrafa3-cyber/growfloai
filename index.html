@@ -48,7 +48,7 @@
 <link rel="icon" href="growflo logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Inter+Tight:wght@500..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -91,9 +91,9 @@
 
     <nav class="nav-links">
       <a href="#system">The System</a>
+      <a href="#results">Results</a>
+      <a href="#how">How it works</a>
       <a href="#faq">FAQ</a>
-      <a href="results.html">Results</a>
-      <a href="about.html">About</a>
     </nav>
 
     <a href="start.html" class="btn-spin cool sm"><span class="btn-spin-ring"></span><span class="btn-spin-in"><span>Get Your Plan</span><span class="arw">&rarr;</span></span></a>
@@ -102,10 +102,10 @@
 </header>
 
 <div class="mob">
-  <a href="index.html">Home <i>01</i></a>
-  <a href="index.html#faq">FAQ <i>02</i></a>
-  <a href="results.html">Results <i>03</i></a>
-  <a href="about.html">About <i>04</i></a>
+  <a href="#system">The System <i>01</i></a>
+  <a href="#results">Results <i>02</i></a>
+  <a href="#how">How it works <i>03</i></a>
+  <a href="#faq">FAQ <i>04</i></a>
   <a href="start.html">Get Your Plan <i>05</i></a>
 </div>
 
@@ -140,7 +140,7 @@
 
       <div class="shero-btns">
         <a href="start.html" class="shero-btn shero-btn-primary">See If We're A Fit</a>
-        <a href="results.html#story" class="shero-btn shero-btn-secondary">Hear From A Client</a>
+        <a href="#story" class="shero-btn shero-btn-secondary">Hear From A Client</a>
       </div>
     </div>
 
@@ -149,17 +149,156 @@
   <div class="scroll-cue"><span>Scroll</span><i></i></div>
 </section>
 
-<!-- ============ SOCIAL PROOF ============ -->
-<!-- Condensed on purpose: the full breakdown lives on the Results page.
-     This is the anchor, not the case study. -->
-<section class="sec-sm wrap" id="proof">
+<!-- ============ THE SYSTEM (pinned, motion-first) ============ -->
+<!-- No body copy on purpose: each step is a huge title + a looping scene.
+     Scenes only animate while their step is .live (main.js initPinned), so
+     each one restarts from frame one when you scroll onto it. -->
+<section class="sys" id="system">
+  <div class="sys-track">
+    <div class="sys-pin">
+      <div class="sys-in">
+
+        <div class="sys-label">
+          <span class="eyebrow">The system</span>
+          <span class="sys-count"><b id="sysNow">01</b> / 06</span>
+        </div>
+
+        <div class="sys-prog"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+        <div class="sx-steps">
+
+          <!-- 01 leads stream in; inside the area they pop, outside they bounce -->
+          <article class="sx-step live">
+            <h3 class="sx-title"><span class="sx-num">01</span>Leads<br><em>flow in.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="f-area"></div>
+              <div class="f-core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg></div>
+              <i class="f-dot in"  style="--sx:-58;--sy:-20;--tx:-14;--ty:-6;--d:0"></i>
+              <i class="f-dot in"  style="--sx:55;--sy:-40;--tx:12;--ty:-15;--d:.5"></i>
+              <i class="f-dot in"  style="--sx:-40;--sy:58;--tx:-8;--ty:17;--d:1"></i>
+              <i class="f-dot in"  style="--sx:60;--sy:30;--tx:19;--ty:8;--d:1.5"></i>
+              <i class="f-dot in"  style="--sx:2;--sy:-64;--tx:2;--ty:-21;--d:2"></i>
+              <i class="f-dot in"  style="--sx:-64;--sy:8;--tx:-22;--ty:3;--d:2.5"></i>
+              <i class="f-dot in"  style="--sx:30;--sy:60;--tx:10;--ty:20;--d:3"></i>
+              <i class="f-dot in"  style="--sx:62;--sy:-6;--tx:24;--ty:-2;--d:3.5"></i>
+              <i class="f-dot out" style="--sx:-56;--sy:-56;--tx:-25;--ty:-25;--d:.25"></i>
+              <i class="f-dot out" style="--sx:62;--sy:52;--tx:27;--ty:23;--d:1.25"></i>
+              <i class="f-dot out" style="--sx:-62;--sy:41;--tx:-29;--ty:19;--d:2.25"></i>
+              <i class="f-dot out" style="--sx:45;--sy:-62;--tx:21;--ty:-29;--d:3.25"></i>
+            </div>
+          </article>
+
+          <!-- 02 phone rings, the clock stops at 0:47, call/text/email fire -->
+          <article class="sx-step">
+            <h3 class="sx-title"><span class="sx-num">02</span>Called in<br><em>60 seconds.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="c-wrap">
+                <div class="c-box">
+                  <svg class="c-ring" viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="54"/><circle class="bar" cx="60" cy="60" r="54" pathLength="60"/></svg>
+                  <i class="c-wave"></i><i class="c-wave"></i>
+                  <div class="c-phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg></div>
+                </div>
+                <div class="c-time"></div>
+                <div class="c-chips"><span>Call</span><span>Text</span><span>Email</span></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 03 a human checkpoint: good leads pass, the rest drop -->
+          <article class="sx-step">
+            <h3 class="sx-title"><span class="sx-num">03</span>Qualified<br><em>by a human.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="g-gate"></div>
+              <div class="g-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+              <div class="g-card ok" style="--d:0">Homeowner &middot; ready now</div>
+              <div class="g-card no" style="--d:1.6">Renter</div>
+              <div class="g-card ok" style="--d:3.2">Budget fits</div>
+              <div class="g-card no" style="--d:4.8">Just browsing</div>
+              <div class="g-card ok" style="--d:6.4">In your area</div>
+            </div>
+          </article>
+
+          <!-- 04 estimates drop onto the week -->
+          <article class="sx-step">
+            <h3 class="sx-title"><span class="sx-num">04</span>Booked on<br><em>your calendar.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="k-cal">
+                <div class="k-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+                <div class="k-grid">
+                  <i><b style="--d:0"></b></i><i></i><i><b style="--d:.7"></b></i><i></i><i><b style="--d:1.4"></b></i>
+                  <i></i><i><b style="--d:.35"></b></i><i><b style="--d:2.1"></b></i><i><b style="--d:1.05"></b></i><i></i>
+                  <i><b style="--d:1.75"></b></i><i></i><i></i><i><b style="--d:2.45"></b></i><i><b style="--d:2.8"></b></i>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 05 stars fill, reviews float up into the rating -->
+          <article class="sx-step">
+            <h3 class="sx-title"><span class="sx-num">05</span>Reviews<br><em>roll in.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="r-stars">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+              </div>
+              <div class="r-bub" style="--x:-19;--d:0"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><i></i><i></i></div>
+              <div class="r-bub" style="--x:19;--d:1.5"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><i></i><i></i></div>
+              <div class="r-bub" style="--x:-19;--d:3"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><i></i><i></i></div>
+            </div>
+          </article>
+
+          <!-- 06 one contractor per city: a padlock secures; rivals bounce off it -->
+          <article class="sx-step">
+            <h3 class="sx-title"><span class="sx-num">06</span>One contractor<br><em>per city.</em></h3>
+            <div class="sx-stage" aria-hidden="true">
+              <div class="t-grid">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="l-halo"></div>
+              <i class="t-wave"></i>
+              <div class="l-lock">
+                <svg viewBox="0 0 100 120">
+                  <defs><linearGradient id="lockG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFD29D"/><stop offset="1" stop-color="#C99E55"/></linearGradient></defs>
+                  <path class="l-shackle" d="M27 60V38a23 23 0 0 1 46 0v22"/>
+                  <g class="l-body">
+                    <rect x="12" y="54" width="76" height="62" rx="12" fill="url(#lockG)" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+                    <g class="l-key"><circle cx="50" cy="80" r="7" fill="#0A0A0B"/><rect x="47" y="83" width="6" height="16" rx="3" fill="#0A0A0B"/></g>
+                  </g>
+                </svg>
+              </div>
+              <span class="l-chip">Locked to you</span>
+              <i class="t-rival" style="--sx:-46;--sy:-30;--bx:-18;--by:-12;--d:0"></i>
+              <i class="t-rival" style="--sx:44;--sy:34;--bx:17;--by:14;--d:1.1"></i>
+              <i class="t-rival" style="--sx:38;--sy:-44;--bx:14;--by:-18;--d:2.2"></i>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<!-- The old results.html now lives here, condensed. One page, one scroll;
+     the nav jumps to each section. -->
+<section class="sec-sm wrap" id="results">
   <div class="proof-head">
     <div>
       <div class="eyebrow rv">Proof, not promises</div>
       <h2 class="rv" data-delay="90">The numbers our<br>contractors actually see</h2>
     </div>
     <p class="lede rv" data-delay="180">
-      Every figure below came out of a real ad account and a real CRM. None of it is a projection.
+      Every figure below came out of a real ad account and a real CRM.
     </p>
   </div>
 
@@ -198,76 +337,81 @@
       <figcaption><span class="n">02</span> From the CRM &mdash; <b>$280,059</b> closed, <b>$614,790</b> pending</figcaption>
     </figure>
   </div>
-
-  <div class="proof-quote rv">
-    <blockquote>&ldquo;$170,000 in six weeks &mdash; and it&rsquo;s still climbing.&rdquo;</blockquote>
-    <div class="proof-who">
-      <div><b>Bobby Whitus</b><span>Client &middot; 80&times; return on ad spend</span></div>
-      <a href="results.html#story" class="proof-link">Watch the full story <span class="arw">&rarr;</span></a>
-    </div>
-  </div>
 </section>
 
-<!-- ============ MARQUEE ============ -->
-<div class="marq" aria-hidden="true">
-  <div class="marq-track">
-    <span>Roofing</span><span>HVAC</span><span>Remodeling</span><span>Windows &amp; Doors</span><span>Solar</span><span>Plumbing</span><span>Electrical</span><span>Siding</span><span>Painting</span><span>Flooring</span><span>Garage Doors</span><span>Landscaping</span><span>Roofing</span><span>HVAC</span><span>Remodeling</span><span>Windows &amp; Doors</span><span>Solar</span><span>Plumbing</span><span>Electrical</span><span>Siding</span><span>Painting</span><span>Flooring</span><span>Garage Doors</span><span>Landscaping</span>
-  </div>
-</div>
-
-<!-- ============ PROBLEM ============ -->
-<section class="sec wrap">
-  <div class="prob-head">
+<!-- ============ VIDEO TESTIMONIAL ============ -->
+<section class="vt sec-sm" id="story" data-nav="results">
+  <div class="wrap vt-grid">
+    <!-- Click-to-load: a real YouTube iframe delays the window load event by
+         seconds, and the intro loader waits for that event. Only the
+         thumbnail loads up front; main.js swaps in the player on click. -->
+    <div class="vt-player rv" data-yt="MEULVx1s11A" data-title="Bobby Whitus — $170k in 6 weeks with GrowFlo AI" role="button" tabindex="0" aria-label="Play Bobby Whitus&rsquo;s story">
+      <img src="https://i.ytimg.com/vi/MEULVx1s11A/hqdefault.jpg" alt="" loading="lazy">
+      <span class="vt-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    </div>
     <div>
-      <div class="eyebrow rv">The real problem</div>
-      <h2 class="rv" data-delay="90">You don't have a<br>lead problem.</h2>
+      <div class="eyebrow rv" data-delay="80">Client story</div>
+      <blockquote class="vt-quote rv" data-delay="140">
+        $170,000 in six weeks &mdash; and it&rsquo;s still climbing.
+      </blockquote>
+      <div class="who rv" data-delay="200">
+        <div><b>Bobby Whitus</b><span>Client &middot; GrowFlo AI</span></div>
+      </div>
+      <div class="rv" data-delay="260" style="margin-top:30px;">
+        <a href="start.html" class="btn-spin"><span class="btn-spin-ring"></span><span class="btn-spin-in"><span>Check if your area is available</span><span class="arw">&rarr;</span></span></a>
+      </div>
     </div>
-    <p class="lede rv" data-delay="200">
-      You have a follow-up problem. Most contractors are already paying for leads —
-      the money leaks in the gap between the click and the calendar. That gap is
-      where your competitor wins the job.
-    </p>
-  </div>
-
-  <div class="prob-grid" data-stagger="110">
-    <article class="prob-card rv">
-      <span class="n">01</span>
-      <h4>Whoever calls first, wins</h4>
-      <p>Homeowners hire the contractor who calls back first. If you're up a ladder at 2pm, you're not calling back — and by the evening that job is already sold.</p>
-    </article>
-    <article class="prob-card rv">
-      <span class="n">02</span>
-      <h4>Tire-kickers eat your evenings</h4>
-      <p>Ballpark hunters, renters, people twelve months out. You burn your nights ringing people who were never going to buy, and your time is not free.</p>
-    </article>
-    <article class="prob-card rv">
-      <span class="n">03</span>
-      <h4>No-shows kill your margin</h4>
-      <p>An estimate that isn't confirmed and reminded is a coin flip. You drive forty minutes, knock on the door, and nobody's home.</p>
-    </article>
-    <article class="prob-card rv">
-      <span class="n">04</span>
-      <h4>You only get paid once</h4>
-      <p>Great work, no review asked for, no follow-up sent. Every past customer is a job you already paid to acquire and never sold again.</p>
-    </article>
-  </div>
-
-  <div class="prob-cost rv">
-    <span class="prob-cost-l">What the gap actually costs</span>
-    <p>
-      A twelve-thousand-dollar job, gone because someone else called back in four minutes.
-      That isn&rsquo;t a marketing problem. That&rsquo;s your Tuesday.
-    </p>
   </div>
 </section>
 
-<!-- ============ THE BETTER WAY ============ -->
-<section class="sec wrap" id="better">
-  <div class="eyebrow rv">A better way</div>
-  <h2 class="rv" data-delay="90" style="margin-bottom:26px;">So we stopped<br>selling leads.</h2>
+<!-- ============ IN THEIR WORDS ============ -->
+<section class="sec-sm wrap" data-nav="results">
+  <div class="eyebrow rv">In their words</div>
+  <h2 class="rv" data-delay="90" style="margin-bottom:clamp(36px,4vw,56px);">Screenshots,<br>not paraphrases</h2>
+
+  <div class="chat-grid" data-stagger="110">
+    <figure class="chat rv">
+      <div class="chat-shot">
+        <img src="assets/img/t-envied.png" width="900" height="1556" loading="lazy"
+             alt="WhatsApp conversation: contractor confirms $150.9k in revenue from Meta leads, and a 63x return on ad spend">
+        <figcaption>
+        <b>63&times; return on ad spend</b>
+        <span>Garage doors &middot; $150.9k from Meta leads</span>
+        </figcaption>
+      </div>
+    </figure>
+
+    <figure class="chat rv">
+      <div class="chat-shot">
+        <img src="assets/img/t-twin.png" width="900" height="1536" loading="lazy"
+             alt="WhatsApp conversation: contractor at $169,613.86 in closed jobs, up from $120k the previous check-in">
+        <figcaption>
+        <b>$169,613 closed</b>
+        <span>Coatings &middot; up from $120k at the last check-in</span>
+        </figcaption>
+      </div>
+    </figure>
+
+    <figure class="chat rv">
+      <div class="chat-shot">
+        <img src="assets/img/t-color.png" width="900" height="1542" loading="lazy"
+             alt="WhatsApp conversation: painting contractor booked over $62,000 in the first 6 days of running ads">
+        <figcaption>
+        <b>$62,000 in 6 days</b>
+        <span>Painting &middot; from the first week of ads</span>
+        </figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ PROBLEM → BETTER WAY ============ -->
+<section class="sec wrap" id="problem">
+  <div class="eyebrow rv">The real problem</div>
+  <h2 class="rv" data-delay="90" style="margin-bottom:26px;">You don't have a<br>lead problem.</h2>
   <p class="lede rv" data-delay="160" style="margin-bottom:clamp(44px,5vw,72px);">
-    A lead is a name, a number, and a problem you now own. An estimate is a homeowner who has already
-    been called, qualified against your criteria, booked, confirmed and reminded. We only hand over the second one.
+    You have a follow-up problem. The money leaks between the click and the calendar &mdash;
+    and that gap is where your competitor wins the job.
   </p>
 
   <div class="swap-grid" data-stagger="130">
@@ -278,7 +422,6 @@
         <li>You do the chasing, between jobs</li>
         <li>You find out on the phone they&rsquo;re renting</li>
         <li>You drive out and nobody&rsquo;s home</li>
-        <li>The job ends and that&rsquo;s the end of it</li>
       </ul>
     </div>
     <div class="swap-col is-us rv">
@@ -288,207 +431,12 @@
         <li>Called, texted and emailed inside 60 seconds</li>
         <li>Qualified against your criteria by a person</li>
         <li>Confirmed and reminded, so they show up</li>
-        <li>Review collected, then followed up monthly</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ THE SYSTEM (pinned) ============ -->
-<section class="sys" id="system">
-  <div class="sys-track">
-    <div class="sys-pin">
-      <div class="sys-in">
-
-        <div class="sys-label">
-          <span class="eyebrow">Six moving parts, one system</span>
-          <span class="sys-count"><b id="sysNow">01</b> / 06</span>
-        </div>
-
-        <div class="sys-prog"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-        <div class="sys-grid">
-          <div class="sys-steps">
-
-            <article class="sys-step live">
-              <span class="num">01</span>
-              <h3>Ads that make you<br>the go-to pro</h3>
-              <p>We put your name in front of homeowners inside your service area who are actively looking for the work you do — so when they're ready to hire, you're the one they already know. Anyone outside your radius never makes it through.</p>
-              <span class="ben"><i>Which means</i> you stop competing on price &mdash; they already know your name.</span>
-              <span class="tag">Paid social &amp; search</span>
-            </article>
-
-            <article class="sys-step">
-              <span class="num">02</span>
-              <h3>Contacted in 60 seconds</h3>
-              <p>The second a homeowner enquires, the system fires — call, text and email inside a minute. Every time. Including 8pm on a Saturday. You win the job by being first, not by being cheapest.</p>
-              <span class="ben"><i>Which means</i> you win the job by being first, not by being cheapest.</span>
-              <span class="tag">Speed to lead</span>
-            </article>
-
-            <article class="sys-step">
-              <span class="num">03</span>
-              <h3>Qualified by real people</h3>
-              <p>A dedicated sales team — humans, not a chatbot — works every lead against your criteria: job type, budget range, timeline, homeowner status, service area. If they don't pass, they never reach you.</p>
-              <span class="ben"><i>Which means</i> your evenings stop disappearing into calls that were never going to close.</span>
-              <span class="tag">Live sales team</span>
-            </article>
-
-            <article class="sys-step">
-              <span class="num">04</span>
-              <h3>Booked onto your calendar</h3>
-              <p>Only qualified homeowners get booked — then confirmed and reminded so they actually show. You open your phone and see estimates waiting, not a list of numbers to chase.</p>
-              <span class="ben"><i>Which means</i> you drive to appointments, not to empty driveways.</span>
-              <span class="tag">Ready for the estimate</span>
-            </article>
-
-            <article class="sys-step">
-              <span class="num">05</span>
-              <h3>Reviews, then repeat work</h3>
-              <p>After the job we collect the review automatically, so your rating climbs and your ads get cheaper. Then we follow up every month — because your past customers are your cheapest next job.</p>
-              <span class="ben"><i>Which means</i> your rating climbs and your ad costs fall, month after month.</span>
-              <span class="tag">Compounding</span>
-            </article>
-
-            <article class="sys-step">
-              <span class="num">06</span>
-              <h3>Your city, locked<br>to one contractor</h3>
-              <p>We won't run two roofers in the same market. When we take your territory it's closed &mdash; every lead the ads generate inside it comes to you, and to nobody else.</p>
-              <span class="ben"><i>Which means</i> you're never bidding against the guy one suburb over.</span>
-              <span class="tag">One per trade, per city</span>
-            </article>
-
-          </div>
-
-          <div class="sys-stage">
-            <span class="crn tl"></span><span class="crn br"></span>
-
-            <!-- 01 service-area radar -->
-            <div class="vis live">
-              <div class="v1">
-                <div class="radar">
-                  <i></i><i></i><i></i>
-                  <span class="area"></span>
-                  <span class="core"></span>
-                  <!-- inside the service area — these reach you -->
-                  <span class="pin in" style="left:32%;top:38%"  tabindex="0" data-tip="9 mi &middot; inside your radius &mdash; sent to you"></span>
-                  <span class="pin in" style="left:64%;top:66%"  tabindex="0" data-tip="14 mi &middot; inside your radius &mdash; sent to you"></span>
-                  <span class="pin in" style="left:42%;top:72%"  tabindex="0" data-tip="18 mi &middot; inside your radius &mdash; sent to you"></span>
-                  <span class="pin in" style="left:72%;top:42%"  tabindex="0" data-tip="21 mi &middot; inside your radius &mdash; sent to you"></span>
-                  <!-- outside — filtered out before they ever reach you -->
-                  <span class="pin out" style="left:10%;top:24%" tabindex="0" data-tip="38 mi &middot; outside your radius &mdash; filtered out"></span>
-                  <span class="pin out" style="left:88%;top:20%" tabindex="0" data-tip="44 mi &middot; outside your radius &mdash; filtered out"></span>
-                  <span class="pin out" style="left:86%;top:82%" tabindex="0" data-tip="52 mi &middot; outside your radius &mdash; filtered out"></span>
-                  <span class="pin out" style="left:12%;top:80%" tabindex="0" data-tip="41 mi &middot; outside your radius &mdash; filtered out"></span>
-                  <span class="pin out" style="left:6%;top:54%"  tabindex="0" data-tip="47 mi &middot; outside your radius &mdash; filtered out"></span>
-                </div>
-                <div class="v1-key">
-                  <span class="k in">In your area</span>
-                  <span class="k out">Filtered out</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 02 speed-to-lead sequence -->
-            <div class="vis">
-              <div class="v2">
-                <div class="lead">
-                  <span class="live-dot"></span>
-                  <div class="lead-t"><b>New lead</b><span>Roof replacement &middot; Austin</span></div>
-                  <span class="lead-s">0:00</span>
-                </div>
-
-                <div class="chans">
-                  <div class="ch c1">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
-                    <span>Calling</span><b>&check;</b>
-                  </div>
-                  <div class="ch c2">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-9 8.5 9.9 9.9 0 01-2.8-.4L3 21l1.4-4.2A8.4 8.4 0 013 11.5 8.4 8.4 0 0112 3a8.4 8.4 0 019 8.5z"/></svg>
-                    <span>Text sent</span><b>&check;</b>
-                  </div>
-                  <div class="ch c3">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M4 6l8 6 8-6"/></svg>
-                    <span>Email sent</span><b>&check;</b>
-                  </div>
-                </div>
-
-                <div class="v2-bar"><i></i></div>
-                <div class="v2-foot">Answered before they called anyone else</div>
-              </div>
-            </div>
-
-            <!-- 03 checklist -->
-            <div class="vis">
-              <div class="chk">
-                <div>Homeowner<b>&check;</b></div>
-                <div>In service area<b>&check;</b></div>
-                <div>Budget in range<b>&check;</b></div>
-                <div class="no">Just browsing<b>&times;</b></div>
-              </div>
-            </div>
-
-            <!-- 04 booked estimates landing on the calendar -->
-            <div class="vis">
-              <div class="v4">
-                <div class="v4-h"><span>Your week</span><b>Confirmed</b></div>
-                <div class="v4-list">
-                  <div class="apt a1"><span class="d">Tue</span><span class="ti">9:00</span><span class="nm">Estimate &middot; Sarah M.</span><span class="ok">&check;</span></div>
-                  <div class="apt a2"><span class="d">Tue</span><span class="ti">2:30</span><span class="nm">Estimate &middot; Dave R.</span><span class="ok">&check;</span></div>
-                  <div class="apt a3"><span class="d">Wed</span><span class="ti">11:15</span><span class="nm">Estimate &middot; Ana P.</span><span class="ok">&check;</span></div>
-                  <div class="apt a4"><span class="d">Thu</span><span class="ti">8:45</span><span class="nm">Estimate &middot; Mike T.</span><span class="ok">&check;</span></div>
-                </div>
-                <div class="v4-foot">Confirmed &amp; reminded &mdash; so they show up</div>
-              </div>
-            </div>
-
-            <!-- 05 reviews -->
-            <div class="vis">
-              <div class="rev">
-                <div class="stars">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-                </div>
-                <b>&uarr;</b>
-                <span>Rating up. Ad costs down.</span>
-                <div class="loop">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 3v6h-6"/></svg>
-                  Monthly follow-up
-                </div>
-              </div>
-            </div>
-
-            <!-- 06 territory locked to one contractor -->
-            <div class="vis">
-              <div class="v6">
-                <div class="v6-grid">
-                  <span></span><span></span><span></span><span></span>
-                  <span></span><span class="mine">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 018 0v3.5"/></svg>
-                  </span><span></span><span></span>
-                  <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="v6-lab">
-                  <b>Your city</b>
-                  <span>Your trade &mdash; taken</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ HOW IT WORKS ============ -->
-<!-- Not how the machine works — that's the section above. This is what
-     working with us asks of you, which is the thing people hesitate over. -->
 <section class="sec wrap" id="how">
   <div class="eyebrow rv">How it works</div>
   <h2 class="rv" data-delay="90" style="margin-bottom:clamp(46px,5vw,74px);">Three steps from<br>here to booked</h2>
@@ -500,7 +448,7 @@
         <span class="how-dot" aria-hidden="true"></span>
         <span class="n">01</span>
         <h3>Fill in the form</h3>
-        <p>It asks for your trade, your city and your crew's capacity &mdash; and tells us straight away whether your market is still open.</p>
+        <p>Your trade, your city and your capacity &mdash; it tells us straight away if your market is still open.</p>
         <span class="how-meta">About 90 seconds</span>
       </article>
 
@@ -508,7 +456,7 @@
         <span class="how-dot" aria-hidden="true"></span>
         <span class="n">02</span>
         <h3>A short fit call</h3>
-        <p>We build the numbers against your ad budget and how fast you actually want to grow. If it doesn't add up for you, we say so on that call.</p>
+        <p>We run the numbers against your ad budget. If it doesn't add up for you, we say so.</p>
         <span class="how-meta">No pitch, no pressure</span>
       </article>
 
@@ -516,7 +464,7 @@
         <span class="how-dot" aria-hidden="true"></span>
         <span class="n">03</span>
         <h3>We turn it on</h3>
-        <p>Ads live, follow-up wired, sales team briefed on your criteria. From then on you open your phone to a calendar instead of a list of numbers.</p>
+        <p>Ads live, follow-up wired, sales team briefed on your criteria.</p>
         <span class="how-meta">Then estimates start landing</span>
       </article>
     </div>
@@ -524,7 +472,7 @@
 </section>
 
 <!-- ============ GUARANTEE ============ -->
-<section class="sec wrap">
+<section class="sec wrap" id="guarantee" data-nav="how">
   <div class="eyebrow rv">How we de-risk it</div>
   <h2 class="rv" data-delay="90" style="margin-bottom:50px;">We take the<br>risk off your side</h2>
 
@@ -532,29 +480,18 @@
     <article class="gua-card rv">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></div>
       <h3>A booked-estimate target,<br>agreed up front</h3>
-      <p>Before anything starts we agree a number: how many qualified estimates land on your calendar in the first 30 days. That target is set against your ad budget and how fast you want to scale — then we're held to it.</p>
+      <p>We agree how many qualified estimates land on your calendar in the first 30 days. If we come in under it, we keep working at no additional fee until we've made up the difference.</p>
     </article>
 
     <article class="gua-card rv">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7.5 3v6c0 4.6-3.1 7.9-7.5 9-4.4-1.1-7.5-4.4-7.5-9V6z"/></svg></div>
       <h3>One contractor<br>per trade, per city</h3>
-      <p>We won't run two roofers in the same market. When we take your territory it's closed, and every lead generated inside it is yours. It also means we can't work with everyone — which is why there's a form before the call.</p>
+      <p>When we take your territory it's closed, and every lead generated inside it is yours. That's why there's a form before the call.</p>
     </article>
-  </div>
-
-  <div class="rv" style="margin-top:44px;">
-    <div class="trades">
-      <span>Roofing</span><span>HVAC</span><span>Remodeling</span><span>Windows &amp; Doors</span>
-      <span>Solar</span><span>Plumbing</span><span>Electrical</span><span>Siding</span>
-      <span>Painting</span><span>Flooring</span><span>Garage Doors</span><span>Landscaping</span>
-    </div>
   </div>
 </section>
 
 <!-- ============ FAQ ============ -->
-<!-- ⚠ FOUR ANSWERS BELOW ARE MY BEST GUESS, NOT CONFIRMED BUSINESS FACTS.
-     Each is marked with a NEEDS-CONFIRMING comment. Correct them before
-     this page goes anywhere near a real prospect. -->
 <section class="sec wrap" id="faq">
   <div class="faq-head">
     <div>
@@ -562,8 +499,7 @@
       <h2 class="rv" data-delay="90">Before you fill<br>anything in</h2>
     </div>
     <p class="lede rv" data-delay="180">
-      If it isn't answered here, ask on the call. We'd rather tell you it isn't a fit
-      than sell you something that isn't.
+      If it isn't answered here, ask on the call.
     </p>
   </div>
 
@@ -571,42 +507,32 @@
 
     <details class="faq rv">
       <summary><span>What does it cost?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>It depends on your trade, your market and how hard you want to push. A roofer scaling to a second crew in Austin isn't the same build as a plumber testing one zip code. We price it on the call, once we've seen your numbers &mdash; and if it isn't going to pay for itself, we'll tell you then rather than take the money.</p></div>
+      <div class="faq-a"><p>It depends on your trade, your market and how hard you want to push. We price it on the call once we've seen your numbers &mdash; and if it isn't going to pay for itself, we'll tell you then rather than take the money.</p></div>
     </details>
 
     <details class="faq rv">
       <summary><span>Am I locked into a long contract?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>We work in 90-day cycles &mdash; long enough for the ads to season and the follow-up to start compounding, short enough that you're never trapped in something that isn't working. If we're not hitting the estimate target we agreed, you're free to walk at the end of the cycle.</p></div>
+      <div class="faq-a"><p>We work in 90-day cycles &mdash; long enough for the ads to season, short enough that you're never trapped. If we're not hitting the estimate target we agreed, you're free to walk at the end of the cycle.</p></div>
     </details>
 
     <details class="faq rv">
       <summary><span>Who pays for the ad spend?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>You do, straight to the platform. It stays your ad account, your data and your audience &mdash; we don't run it through us and we don't mark it up. Our fee is separate, and it's the only thing you pay us.</p></div>
+      <div class="faq-a"><p>You do, straight to the platform. It stays your ad account, your data and your audience &mdash; no markup. Our fee is separate, and it's the only thing you pay us.</p></div>
     </details>
 
     <details class="faq rv">
       <summary><span>What if I already run ads, or have an agency?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>Then you already know the ads aren't the hard part. Most contractors who come to us have a folder full of leads nobody called back fast enough. We can run alongside what you've got or replace it &mdash; but we won't take you on just to duplicate something that's already working for you.</p></div>
+      <div class="faq-a"><p>Most contractors who come to us have a folder full of leads nobody called back fast enough. We can run alongside what you've got or replace it &mdash; but we won't duplicate something that's already working.</p></div>
     </details>
 
     <details class="faq rv">
       <summary><span>What actually counts as a qualified estimate?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>We agree the criteria in writing before anything goes live: they own the home, they're inside your service area, it's the kind of job you actually want, their budget matches your pricing, and their timeline is one you can service. Miss any of those and they never reach your calendar.</p></div>
-    </details>
-
-    <details class="faq rv">
-      <summary><span>What happens if you miss the target?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>We agree a booked-estimate number up front, set against your ad budget and how fast you want to scale. If we come in under it, we keep working the account at no additional fee until we've made up the difference.</p></div>
+      <div class="faq-a"><p>We agree the criteria in writing before anything goes live: they own the home, they're inside your service area, it's a job you want, their budget fits your pricing, and their timeline works for you.</p></div>
     </details>
 
     <details class="faq rv">
       <summary><span>How quickly can we start?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>Usually about a week from the fit call &mdash; that covers building out the ad account, wiring up the follow-up, and briefing the sales team on your criteria. First booked estimates tend to land inside the fortnight after that.</p></div>
-    </details>
-
-    <details class="faq rv">
-      <summary><span>What if someone in my city signs up first?</span><i aria-hidden="true"></i></summary>
-      <div class="faq-a"><p>Then the city's gone. One contractor per trade, per city &mdash; if we've already taken a roofer in your market, we won't take another one. That's the whole reason there's a form before the call instead of a booking link.</p></div>
+      <div class="faq-a"><p>Usually about a week from the fit call. First booked estimates tend to land inside the fortnight after that.</p></div>
     </details>
 
   </div>
@@ -620,11 +546,9 @@
     <h2 class="rv" data-delay="90">Ready to see estimates<br>instead of leads?</h2>
     <p class="lede rv" data-delay="180" style="text-align:center;">
       Fill in the short form and we'll build a plan for your trade, your city and your crew's capacity.
-      If we're not a fit, we'll tell you on the call.
     </p>
     <div class="cta-btns rv" data-delay="260">
       <a href="start.html" class="btn-spin"><span class="btn-spin-ring"></span><span class="btn-spin-in"><span>Start your application</span><span class="arw">&rarr;</span></span></a>
-      <a href="results.html" class="btn-spin cool"><span class="btn-spin-ring"></span><span class="btn-spin-in"><span>See the results</span></span></a>
     </div>
     <div class="cta-meta rv" data-delay="340">
       <span><i>01</i>Takes about 90 seconds</span>
@@ -641,7 +565,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <a href="index.html" class="brand">
+        <a href="#" class="brand">
           <svg viewBox="0 0 100 98" aria-hidden="true">
             <defs><mask id="gfm2">
               <rect width="100" height="98" fill="#000"/>
@@ -659,11 +583,10 @@
       <div>
         <h5>Site</h5>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#system">The System</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
-          <li><a href="results.html">Results</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="#system">The System</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="start.html">Get Your Plan</a></li>
         </ul>
       </div>
@@ -685,7 +608,7 @@
 </footer>
 
 <!-- ============ MOBILE STICKY RESULTS BAR ============ -->
-<a href="results.html" class="mob-results" aria-label="See our results">
+<a href="#results" class="mob-results" aria-label="See our results">
   See Our Results &rarr;
 </a>
 

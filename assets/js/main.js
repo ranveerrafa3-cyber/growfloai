@@ -20,22 +20,12 @@
     document.body.classList.add('loaded');
     if (wipe) { wipe.classList.add('out'); }
 
+    /* [INTRO] shortened 2026-10-07: ~1s total, page scrolls the whole time.
+       Was: body.is-locked while it ran, settle at 1400ms, removed at 2800ms. */
     if (intro) {
-      document.body.classList.add('is-locked');
-
-      if (REDUCED) {
-        intro.remove();
-        document.body.classList.remove('is-locked');
-        return;
-      }
-
-      setTimeout(function () {
-        intro.classList.add('settle');
-      }, 1400);
-      setTimeout(function () {
-        document.body.classList.remove('is-locked');
-        intro.remove();
-      }, 2800);
+      if (REDUCED) { intro.remove(); return; }
+      setTimeout(function () { intro.classList.add('settle'); }, 450);
+      setTimeout(function () { intro.remove(); }, 1000);
     }
   });
 
@@ -121,6 +111,22 @@
     });
   }
 
+  /* one-page nav: underline the link for whichever section is on screen */
+  var navLinks = $$('.nav-links a[href^="#"]');
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var href = '#' + (en.target.getAttribute('data-nav') || en.target.id);
+        navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === href); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    /* every top-level section is watched, so scrolling into one without a nav
+       link (the hero, the problem) clears the underline instead of leaving a
+       stale one behind */
+    $$('main > section').forEach(function (s) { spy.observe(s); });
+  }
+
   /* ---------------------------------------------------------
      4. SPLIT TEXT (chars) for [data-split]
      --------------------------------------------------------- */
@@ -199,7 +205,7 @@
       var p = clamp((t - t0) / dur, 0, 1);
       var e = 1 - Math.pow(1 - p, 3);
       var v = target * e;
-      el.textContent = pre + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString()) + suf;
+      el.textContent = pre + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US')) + suf;
       if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
@@ -255,7 +261,8 @@
     onScroll();
   }
 
-  initPinned({ track: '.sys-track', step: '.sys-step', vis: '.vis', bar: '.sys-prog i', counter: '#sysNow' });
+  /* each .sx-step holds its own title + scene, so there is no separate visual list */
+  initPinned({ track: '.sys-track', step: '.sx-step', vis: '.sx-none', bar: '.sys-prog i', counter: '#sysNow' });
 
   /* the rules section reuses the same driver, and counts the estimate tally
      up the moment its scoreboard step becomes live */
@@ -319,7 +326,27 @@
   /* ---------------------------------------------------------
      10. VIDEO TESTIMONIAL
      --------------------------------------------------------- */
-  $$('.vt-player').forEach(function (p) {
+  /* YouTube facade: swap the thumbnail for the real player on first click */
+  $$('.vt-player[data-yt]').forEach(function (p) {
+    function play() {
+      if (p.classList.contains('yt')) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(p.getAttribute('data-yt')) + '?autoplay=1&rel=0';
+      f.title = p.getAttribute('data-title') || 'Client video';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.allowFullscreen = true;
+      p.textContent = '';
+      p.appendChild(f);
+      p.classList.add('yt', 'playing');
+      p.removeAttribute('role'); p.removeAttribute('tabindex'); p.removeAttribute('aria-label');
+    }
+    p.addEventListener('click', play);
+    p.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+    });
+  });
+
+  $$('.vt-player:not([data-yt])').forEach(function (p) {
     var v = $('video', p);
     p.addEventListener('click', function () {
       if (!v) return;

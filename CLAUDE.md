@@ -7,7 +7,7 @@ touching anything; it records decisions that aren't visible in the code.
 
 ## What this is
 
-A 4-page marketing site for **GrowFlo AI** — a done-for-you growth system for
+A one-page marketing site (plus the `start.html` form) for **GrowFlo AI** — a done-for-you growth system for
 **home service contractors** (roofing, HVAC, remodeling, windows, solar…).
 
 The offer, in the client's own words: run the ads → contact every homeowner
@@ -37,12 +37,11 @@ The whole pitch is **"booked estimates, not leads."** Keep copy on that line.
 ## File map
 
 ```
-index.html      home     hero, proof, marquee, problem, better-way,
-                         features (pinned 6-step), how-it-works, guarantee, FAQ, CTA
-results.html    proof    top stats, 30-day result w/ real screenshots,
-                         video testimonial, 3 case studies, 3 chat screenshots
-about.html      story    founder story, pinned 3-rule counter-scroll section
+index.html      home     ONE PAGE: hero, #system (pinned 6-step motion scenes),
+                         #results (numbers, screenshots, video, chat screenshots),
+                         #problem, #how, #guarantee, #faq, CTA
 start.html      form     7-step qualifying form + GHL booking calendar
+confirmation.html        post-booking page with VSL slot
 assets/css/style.css     single stylesheet, CSS custom properties as tokens
 assets/js/main.js        reveals, counters, pinned-scroll driver, nav glass
 assets/js/form.js        the 7-step form — ENDPOINT lives here
@@ -57,9 +56,17 @@ GO-LIVE.md               the runbook — read this before deploying
 .claude-session/         session transcript. NEVER DEPLOY. See DO-NOT-DEPLOY.txt
 ```
 
-Design tokens: `--ink #000` `--bone #F4F4F2` `--bone-dim #C9C9C2`
-`--muted #9A9A93` `--gold #E5A729`. Fonts: Space Grotesk + Instrument Serif
-(taken from contractorai.co at the user's request).
+Design tokens (premium pass, 2026-10-07): `--ink #000` `--ink-1 #0A0A0B`
+`--ink-2 #111113` `--ink-3 #18181B` `--bone #F2F0EB` (warm ivory)
+`--bone-dim #BDB9B1` `--muted #8F8B83` `--gold #D6B06B` (champagne)
+`--gold-lit #EBCB8F` `--gold-dp #A07E3F`. Fonts: **Inter Tight** (display)
++ **Inter** (text), replacing Space Grotesk at the user's request for "more
+professional fonts". Instrument Serif is only loaded on start.html and confirmation.html (their italic accent words).
+The wordmark is "GrowFlo AI" in mixed case (G and F capital), never all caps.
+The hero kept its layout but lost its Tailwind orange/yellow/red: ivory →
+champagne headline, gold-lit button, smoky warm shader. One accent only:
+no blue/purple anywhere (the header CTA ring used to be indigo).
+`.claude/og-image.html` / `og.png` still use the old look; regenerate if asked.
 
 ## Decisions already made — don't re-litigate
 
@@ -70,9 +77,42 @@ Design tokens: `--ink #000` `--bone #F4F4F2` `--bone-dim #C9C9C2`
 - **Page structure follows the user's own landing-page framework:** hero →
   social proof → problem → solution → features → how it works → FAQ → CTA →
   footer. That order is intentional; it was specified explicitly.
-- **The homepage proof section is a condensed teaser on purpose.** The user
-  earlier said to strip anything duplicated from Results. The homepage keeps
-  small screenshots + 4 numbers + one quote, all linking out to `results.html`.
+- **One page, no About, no Results page (2026-10-06).** The user asked for the
+  contractorai.co pattern: everything on one scroll, the nav jumps to sections
+  (`#results #system #how #faq`), and far less copy. `about.html` and
+  `results.html` were deleted; `vercel.json` 301s them to `/` and `/#results`.
+  Don't re-add pages or pad sections back out. Sections without a nav link carry
+  `data-nav` so the scroll-spy keeps the right link underlined.
+- **The System comes straight after the hero, and is motion-only (2026-10-07).**
+  User's call: no descriptions, no tags — each step is a huge title plus a
+  looping CSS scene in `.sx-stage` (leads streaming in and popping, ringing
+  phone + 0:47 clock, human checkpoint, calendar filling, stars, padlock that
+  clicks shut). Step 06's title is "One contractor per city." (2026-10-07: the
+  user found "Your city, locked" unclear).
+  Scenes are sized in `cqmin` and only animate under `.sx-step.live`. Base
+  styles are the final frame, which is what reduced-motion shows. The case
+  study cards were removed at the user's request ("random clutter").
+- **Type floor (2026-10-07, Apple HIG + apple.com's own CSS as the reference).**
+  Body 17px/1.55. No label below 12px; uppercase labels track .08–.12em, never
+  .14–.2em. Reading copy 16–17px. Headline tracking −.018 to −.03em (tighter as
+  size grows). `--muted-2` is for lines/decoration only, never text (3.7:1 on
+  black); text greys use `--muted` or lighter. Form inputs are 17px so iOS
+  Safari doesn't zoom on focus (it zooms below 16px). Don't reintroduce
+  10–11px labels. Scene labels inside `.sx-stage` use `max(<px>, Ncqmin)` floors.
+- **VSL motion kit** lives in the vault: `Brand/VSL Motion Kit/` (standalone
+  `system-scenes.html` + `Motion Spec.md`). If the System scenes change here,
+  regenerate the kit so the VSL and the site stay in sync.
+- **Background + intro pass (2026-10-07), approved as a set but each block is
+  separately removable.** The user asked for it this way: if they dislike one,
+  delete exactly that block, nothing else. Blocks are labelled at the end of
+  style.css: [BG-1] streak-free band behind the hero subtitle (canvas mask +
+  deeper scrim), [BG-2] vignette hero-only, [BG-3] grain static + hero-only,
+  [INTRO] ~1s intro with no scroll lock (timings also in main.js §1, old values
+  in its comment), [BG-5] champagne-glow hero fallback, [BG-6] glow behind
+  Results numbers + ink-1 bands on #problem and #guarantee.
+- **The video testimonial is click-to-load** (thumbnail + play button). A live
+  YouTube iframe pushed the load event from ~1s to 4–6s, and the intro loader
+  waits for that event. Keep it a facade.
 - **Form sends the lead when leaving step 6, before the calendar appears**, so
   an abandoned booking is still captured.
 - **The form also pings progress on every question from 2 onwards**
@@ -158,7 +198,7 @@ from GHL's documentation.
   `curl -L` mangles this — it can 405 on a perfectly working deployment. Curl
   without `-L`, read the `Location` header, then `curl` that URL separately.
   Don't mistake a curl redirect artifact for a broken script twice.
-- The three case studies in `results.html` are now **real clients** (Grand City
+- The three case studies (removed from the site 2026-10-07; data kept in git history) are **real clients** (Grand City
   Epoxy, NB Garage, Twin Brothers), added 2026-09-06. Three gaps remain, all
   marked `TODO` in the markup — **do not invent values for them**:
     1. NB Garage's city and state (its `case-tag` has no location; the other
